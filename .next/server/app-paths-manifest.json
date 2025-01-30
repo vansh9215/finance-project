@@ -1,0 +1,8 @@
+{
+  "/api/[[...route]]/route": "static/webpack/app/api/[[...route]]/route.06547576f38a0555.hot-update.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(dashboard)/page": "app/(dashboard)/page.js",
+  "/(dashboard)/transactions/page": "app/(dashboard)/transactions/page.js",
+  "/(dashboard)/categories/page": "app/(dashboard)/categories/page.js",
+  "/(dashboard)/accounts/page": "app/(dashboard)/accounts/page.js"
+}
