@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMedia } from "react-use";
 import { usePathname, useRouter } from "next/navigation";
-
 import { Button } from "./ui/button";
 import { NavButton } from "./nav-button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
@@ -42,6 +41,14 @@ export const Navigation = () => {
     setIsOpen(false);
   };
 
+  // Hydration Fix: Use useEffect to avoid client-side rendering issues
+  useEffect(() => {
+    // Make sure that the client-side render happens after hydration
+    if (typeof window !== "undefined") {
+      // You can place client-only logic here if needed
+    }
+  }, []);
+
   if (isMobile) {
     return (
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -71,6 +78,7 @@ export const Navigation = () => {
       </Sheet>
     );
   }
+
   return (
     <nav className="hidden lg:flex items-center gap-x-2 overflow-x-auto">
       {routes.map((route) => (

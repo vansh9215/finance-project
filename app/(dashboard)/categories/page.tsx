@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { columns } from "./colomns";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const AccoutnsPage = () => {
+const CategoriesPage = () => {
   const useCategory = useNewCategory();
   const deleteCategories = useBulkDeleteCategories();
   const categoriesQuery = useGetCategories();
@@ -68,4 +68,4 @@ const AccoutnsPage = () => {
   );
 };
 
-export default AccoutnsPage;
+export default CategoriesPage;

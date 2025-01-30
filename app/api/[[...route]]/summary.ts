@@ -18,7 +18,7 @@ const app = new Hono().get(
       from: z.string().optional(),
       to: z.string().optional(),
       accountId: z.string().optional(),
-    })
+    }),
   ),
   async (c) => {
     const auth = getAuth(c);
@@ -29,13 +29,13 @@ const app = new Hono().get(
     }
 
     const defaultTo = new Date();
-    const defaultFrom = subDays(defaultTo, 30);
+    const defaultFrom = subDays(defaultTo, 60);
 
     const startDate = from
-      ? parse(from, "yyyy-MM-dd", new Date())
+      ? parse(from, "dd-MM-yyyy", new Date())
       : defaultFrom;
 
-    const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
+    const endDate = to ? parse(to, "dd-MM-yyyy", new Date()) : defaultTo;
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
     const lastPeriodStart = subDays(startDate, periodLength);
@@ -73,12 +73,12 @@ const app = new Hono().get(
     const [currentPeriod] = await fetchFinancialData(
       auth.userId,
       startDate,
-      endDate
+      endDate,
     );
     const [lastPeriod] = await fetchFinancialData(
       auth.userId,
       lastPeriodStart,
-      lastPeriodEnd
+      lastPeriodEnd,
     );
 
     const incomeChange = calculatePercentage(

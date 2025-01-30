@@ -43,16 +43,16 @@ export const SpendingPie = ({ data = [] }: Props) => {
                 <p className="line-clamp-1">Pie Chart</p>
               </div>
             </SelectItem>
-            <SelectItem value="radar">
-              <div className="flex items-center ">
-                <Radar className="size-4 mr-2 shrink-0" />
-                <p className="line-clamp-1">Radar Chart</p>
-              </div>
-            </SelectItem>
             <SelectItem value="radial">
               <div className="flex items-center ">
-                <Target className="size-4 mr-2 shrink-0" />
+                <Radar className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Radial Chart</p>
+              </div>
+            </SelectItem>
+            <SelectItem value="radar">
+              <div className="flex items-center ">
+                <Target className="size-4 mr-2 shrink-0" />
+                <p className="line-clamp-1">Radar Chart</p>
               </div>
             </SelectItem>
           </SelectContent>

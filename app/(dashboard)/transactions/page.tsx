@@ -17,7 +17,7 @@ import { DataTable } from "@/components/data-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { columns } from "./colomns";
+import { columns } from "./columns";
 import { UploadButton } from "./upload-button";
 import { ImportCard } from "./import-card";
 import { convertAmountToMiliunits } from "@/lib/utils";
@@ -30,7 +30,7 @@ enum VARIANTS {
 const INITIAL_IMPORT_RESULTS = {
   data: [],
   errors: [],
-  meta: [],
+  meta: {},
 };
 
 const TransactionsPage = () => {

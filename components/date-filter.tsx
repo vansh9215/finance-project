@@ -31,7 +31,7 @@ export const DateFilter = () => {
   const to = params.get("to") || "";
 
   const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const defaultFrom = subDays(defaultTo, 60);
 
   const paramState = {
     from: from ? new Date(from) : defaultFrom,
@@ -42,8 +42,8 @@ export const DateFilter = () => {
 
   const pushToUrl = (dataRange: DateRange | undefined) => {
     const query = {
-      from: format(dataRange?.from || defaultFrom, "yyyy-MM-dd"),
-      to: format(dataRange?.to || defaultTo, "yyyy-MM-dd"),
+      from: format(dataRange?.from || defaultFrom, "dd-MM-yyyy"),
+      to: format(dataRange?.to || defaultTo, "dd-MM-yyyy"),
       accountId,
     };
 

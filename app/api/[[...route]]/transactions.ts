@@ -11,7 +11,7 @@ import {
   transactions,
   insertTransactionSchema,
   categories,
-  accounts,
+  accounts
 } from "@/db/schema";
 
 const app = new Hono()
@@ -38,10 +38,12 @@ const app = new Hono()
       const defaultFrom = subDays(defaultTo, 30);
 
       const startDate = from
-        ? parse(from, "yyyy-MM-dd", new Date())
+        ? parse(from, "dd-MM-yyyy", new Date())
         : defaultFrom;
 
-      const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
+      const endDate = to 
+        ? parse(to, "dd-MM-yyyy", new Date()) 
+        : defaultTo;
 
       const data = await db
         .select({
@@ -100,7 +102,6 @@ const app = new Hono()
           payee: transactions.payee,
           amount: transactions.amount,
           notes: transactions.notes,
-          account: accounts.name,
           accountId: transactions.accountId,
         })
         .from(transactions)
@@ -150,8 +151,8 @@ const app = new Hono()
       z.array(
         insertTransactionSchema.omit({
           id: true,
-        })
-      )
+        }),
+      ),
     ),
     async (c) => {
       const auth = getAuth(c);
@@ -172,7 +173,7 @@ const app = new Hono()
         .returning();
 
       return c.json({ data });
-    }
+    },
   )
   .post(
     "/bulk-delete",
@@ -199,9 +200,9 @@ const app = new Hono()
           .where(
             and(
               inArray(transactions.id, values.ids),
-              eq(accounts.userId, auth.userId)
+              eq(accounts.userId, auth.userId),
             )
-          )
+          ),
       );
 
       const [data] = await db
@@ -253,7 +254,7 @@ const app = new Hono()
           .select({ id: transactions.id })
           .from(transactions)
           .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-          .where(and(eq(transactions.id, id), eq(accounts.userId, auth.userId)))
+          .where(and(eq(transactions.id, id), eq(accounts.userId, auth.userId))),
       );
 
       const [data] = await db
@@ -311,7 +312,7 @@ const app = new Hono()
           inArray(
             transactions.id,
             sql`(select id from ${transactionsToDelete})`
-          )
+          ),
         )
         .returning({
           id: transactions.id,

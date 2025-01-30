@@ -46,9 +46,9 @@ export const AmountInput = ({
                 isExpense && "bg-rose-500 hover:bg-rose-600"
               )}
             >
-              {!parsedValue && <Info className="size-3" />}
-              {isIncome && <PlusCircle className="size-3" />}
-              {isExpense && <MinusCircle className="size-3" />}
+              {!parsedValue && <Info className="size-3 text-white" />}
+              {isIncome && <PlusCircle className="size-3 text-white" />}
+              {isExpense && <MinusCircle className="size-3 text-white" />}
             </button>
           </TooltipTrigger>
           <TooltipContent>
@@ -57,7 +57,7 @@ export const AmountInput = ({
         </Tooltip>
       </TooltipProvider>
       <CurrencyInput
-        prefix="$"
+        prefix="₹"
         className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         placeholder={placeholder}
         value={value}
@@ -68,7 +68,7 @@ export const AmountInput = ({
       />
       <p className="text-xs text-muted-foreground mt-2">
         {isIncome && "This will count as income"}
-        {isExpense && "This will count as expense"}
+        {isExpense && "This will count as an expense"}
       </p>
     </div>
   );

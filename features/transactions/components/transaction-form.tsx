@@ -71,7 +71,7 @@ export const TransactionForm = ({
     onSubmit({
       ...values,
       amount: amountInMiliunits,
-    })
+    });
   };
 
   const handleDelete = () => {
