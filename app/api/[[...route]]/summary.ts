@@ -7,7 +7,7 @@ import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
 import { accounts, categories, transactions } from "@/db/schema";
-import { calculatePercentage, fillMissingDays } from "@/lib/utils";
+import { calculatePercentageChange, fillMissingDays } from "@/lib/utils";
 
 const app = new Hono().get(
   "/",
@@ -29,13 +29,13 @@ const app = new Hono().get(
     }
 
     const defaultTo = new Date();
-    const defaultFrom = subDays(defaultTo, 60);
+    const defaultFrom = subDays(defaultTo, 30);
 
     const startDate = from
-      ? parse(from, "dd-MM-yyyy", new Date())
+      ? parse(from, "yyyy-MM-dd", new Date())
       : defaultFrom;
 
-    const endDate = to ? parse(to, "dd-MM-yyyy", new Date()) : defaultTo;
+    const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
     const lastPeriodStart = subDays(startDate, periodLength);
@@ -81,15 +81,15 @@ const app = new Hono().get(
       lastPeriodEnd,
     );
 
-    const incomeChange = calculatePercentage(
+    const incomeChange = calculatePercentageChange(
       currentPeriod.income,
       lastPeriod.income
     );
-    const expensesChange = calculatePercentage(
+    const expensesChange = calculatePercentageChange(
       currentPeriod.expenses,
       lastPeriod.expenses
     );
-    const remainingChange = calculatePercentage(
+    const remainingChange = calculatePercentageChange(
       currentPeriod.remaining,
       lastPeriod.remaining
     );

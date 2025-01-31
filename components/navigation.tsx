@@ -1,58 +1,44 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMedia } from "react-use";
 import { usePathname, useRouter } from "next/navigation";
+import { useMedia } from "react-use";
 import { Button } from "./ui/button";
 import { NavButton } from "./nav-button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Menu } from "lucide-react";
 
 const routes = [
-  {
-    href: "/",
-    label: "Overview",
-  },
-  {
-    href: "/transactions",
-    label: "Transactions",
-  },
-  {
-    href: "/accounts",
-    label: "Accounts",
-  },
-  {
-    href: "/categories",
-    label: "Categories",
-  },
-  {
-    href: "/settings",
-    label: "Settings",
-  },
+  { href: "/", label: "Overview" },
+  { href: "/transactions", label: "Transactions" },
+  { href: "/accounts", label: "Accounts" },
+  { href: "/categories", label: "Categories" },
+  { href: "/settings", label: "Settings" },
 ];
 
 export const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const router = useRouter();
   const pathname = usePathname();
-  const isMobile = useMedia("(max-width: 1024px)", false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const onClick = (href: string) => {
     router.push(href);
     setIsOpen(false);
   };
 
-  // Hydration Fix: Use useEffect to avoid client-side rendering issues
+  // Fix hydration issue: Ensure correct mobile detection after client mount
   useEffect(() => {
-    // Make sure that the client-side render happens after hydration
-    if (typeof window !== "undefined") {
-      // You can place client-only logic here if needed
-    }
+    setIsMobile(window.innerWidth < 1024);
   }, []);
+
+  // If still loading, don't render anything to prevent mismatch
+  if (isMobile === null) return null;
 
   if (isMobile) {
     return (
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger>
+        <SheetTrigger asChild>
           <Button
             variant="outline"
             size="sm"

@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { format, subDays } from "date-fns";
+import { format, subDays, isValid } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { ChevronDown } from "lucide-react";
 import qs from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
-
 import { cn, formatDateRange } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 
-//pophover
+// Popover components
 import {
   Popover,
   PopoverContent,
@@ -24,40 +23,50 @@ import {
 export const DateFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
-
   const params = useSearchParams();
   const accountId = params.get("accountId");
-  const from = params.get("from") || "";
-  const to = params.get("to") || "";
 
+  // Default date range (last 30 days)
   const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 60);
+  const defaultFrom = subDays(defaultTo, 30);
 
-  const paramState = {
-    from: from ? new Date(from) : defaultFrom,
-    to: to ? new Date(to) : defaultTo,
+  // Safe date parsing function
+  const parseDate = (dateStr: string | null, defaultValue: Date) => {
+    const parsed = dateStr ? new Date(dateStr) : defaultValue;
+    return isValid(parsed) ? parsed : defaultValue;
   };
 
+  // Parse query parameters safely
+  const paramState = {
+    from: parseDate(params.get("from"), defaultFrom),
+    to: parseDate(params.get("to"), defaultTo),
+  };
+
+  console.log("From:", params.get("from"), "Parsed:", paramState.from);
+  console.log("To:", params.get("to"), "Parsed:", paramState.to);
+  console.log("Valid from:", isValid(paramState.from));
+  console.log("Valid to:", isValid(paramState.to));
+
+  // State for selected date range
   const [date, setDate] = useState<DateRange | undefined>(paramState);
 
-  const pushToUrl = (dataRange: DateRange | undefined) => {
+  // Push selected date range to the URL
+  const pushToUrl = (dateRange: DateRange | undefined) => {
     const query = {
-      from: format(dataRange?.from || defaultFrom, "dd-MM-yyyy"),
-      to: format(dataRange?.to || defaultTo, "dd-MM-yyyy"),
+      from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
+      to: format(dateRange?.to || defaultTo, "yyyy-MM-dd"),
       accountId,
     };
 
     const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query,
-      },
+      { url: pathname, query },
       { skipNull: true, skipEmptyString: true }
     );
 
     router.push(url);
   };
 
+  // Reset filter
   const onReset = () => {
     setDate(undefined);
     pushToUrl(undefined);
