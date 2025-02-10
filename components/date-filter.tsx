@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react"; // Import Suspense from React
 import { useState } from "react";
 import { format, subDays, isValid } from "date-fns";
 import { DateRange } from "react-day-picker";
@@ -120,3 +121,10 @@ export const DateFilter = () => {
     </Popover>
   );
 };
+
+// Wrap the `DateFilter` component with `Suspense`
+export const SuspendedDateFilter = () => (
+  <Suspense fallback={<div>Loading...</div>}> {/* Add fallback */}
+    <DateFilter />
+  </Suspense>
+);

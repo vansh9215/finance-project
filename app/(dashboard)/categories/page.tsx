@@ -9,10 +9,10 @@ import { useBulkDeleteCategories } from "@/features/categories/api/use-bulk-dele
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { columns } from "./colomns";
+import { columns } from "./columns";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const CategoriesPage = () => {
+const AccoutnsPage = () => {
   const useCategory = useNewCategory();
   const deleteCategories = useBulkDeleteCategories();
   const categoriesQuery = useGetCategories();
@@ -68,4 +68,4 @@ const CategoriesPage = () => {
   );
 };
 
-export default CategoriesPage;
+export default AccoutnsPage;

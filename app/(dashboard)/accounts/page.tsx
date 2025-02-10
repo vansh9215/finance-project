@@ -9,7 +9,7 @@ import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete-a
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { columns } from "./colomns";
+import { columns } from "./columns";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const AccountsPage = () => {

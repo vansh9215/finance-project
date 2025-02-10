@@ -30,7 +30,7 @@ enum VARIANTS {
 const INITIAL_IMPORT_RESULTS = {
   data: [],
   errors: [],
-  meta: {},
+  meta: [],
 };
 
 const TransactionsPage = () => {

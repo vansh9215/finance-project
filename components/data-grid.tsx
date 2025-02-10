@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react"; // Import Suspense from React
 import { useSearchParams } from "next/navigation";
 import { FaPiggyBank } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
@@ -57,3 +58,10 @@ export const DataGrid = () => {
     </div>
   );
 };
+
+// Wrap the `DataGrid` component with `Suspense`
+export const SuspendedDataGrid = () => (
+  <Suspense fallback={<div>Loading...</div>}> {/* Add fallback */}
+    <DataGrid />
+  </Suspense>
+);
